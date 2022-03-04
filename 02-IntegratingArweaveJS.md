@@ -284,7 +284,7 @@ With that done, it’s time to get back into the `<PostItems />` components `use
 This is the densest chunk of code in the whole program so if you can learn this bit, it’s smooth sailing from here.
 
 ## Handling asynchronous state
-The purpose of this `useEffect()` in the `<PostItem />` component is to await the transaction data request we initiated in `createPostInfo()` (in the Retrieving transaction data step). This is the densest logic we’ll cover in this guide, so we’ll take it step by step.
+The purpose of this `useEffect()` in the `<PostItem />` component is to await the transaction data request we initiated in `createPostInfo()` (in the [Retrieving transaction data](#retrieving-transaction-data) step). This is the densest logic we’ll cover in this guide, so we’ll take it step by step.
 
 First off we have some local variables to track changes to the status and post messages that our `<PostItem /> `component renders.
 ```js
