@@ -14,7 +14,7 @@ Arweave provides a simple way of querying for transactions by using tags. The ht
 To query arweave we’ll need to access it through a gateway that supports GraphQL. Let’s head over to the GraphQL Playground over at https://arweave.net/graphql. 
 
 Copy and paste in the following query…
-```
+```GraphQL
 query {
   transactions(tags: [{
     name: "App-Name",
