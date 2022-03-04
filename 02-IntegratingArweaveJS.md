@@ -346,7 +346,7 @@ const response = await props.postInfo.request`
 ```
 This` props.item.request` may or may not have been completed before `useEffect()` is executed, but in either case we won’t move to the next line until we have a completed request.
 
-When we created this item.request back in the Retrieving transaction data step, we also added a `.catch()` to handle any errors. If an error happened during the request, the value of response would end up being `undefined` and the error text would be stored in `item.error`.
+When we created this item.request back in the [Retrieving transaction data](#retrieving-transaction-data) step, we also added a `.catch()` to handle any errors. If an error happened during the request, the value of response would end up being `undefined` and the error text would be stored in `item.error`.
 
 So an error is the first thing we check for with `if (!response) {` and we store the error message in our local `newStatus` variable.
 
