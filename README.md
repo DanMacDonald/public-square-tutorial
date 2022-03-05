@@ -12,5 +12,5 @@ This guide is broken into for sections that take roughly 20-30 minutes to comple
 1. [Querying Arweave](01-QueryingArweave.md#querying-arweave) (25-30 minutes)
 2. [Integrating Arweave-js](02-IntegratingArweaveJS.md#integrating-arweave-js) (25-30 minutes)
 3. [Posting transations](03-PostingTransactions.md#posting-transactions) (15-20 minutes)
-4. [Polishing and Deploying](04-PolishingAndDeploying#polishing-and-deploying) (25-30 minutes)
+4. [Polishing and Deploying](04-PolishingAndDeploying.md#polishing-and-deploying) (25-30 minutes)
 

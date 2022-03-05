@@ -299,7 +299,7 @@ Welcome to the permaweb🐘
  
  -DMac
 
- | Previous | Index |
+ | Previous | Overview |
 | -- | -- |
 | [03 Posting Transactions](03-PostingTransactions.md#posting-transactions) | [README.md](README.md#topics)
 
