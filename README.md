@@ -1,4 +1,4 @@
-# Createing a dApp with Arweave + React
+# Creating a dApp with Arweave + React
 ## What are we building?
 Before we dive in, let's have a quick discussion about what we are trying to achieve.
 ## A decentralized Twitter
