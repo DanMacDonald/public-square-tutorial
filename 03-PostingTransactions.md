@@ -232,4 +232,8 @@ A `BASE` transaction is posted directly to arewave as an L1 transaction. `dispat
 
 Finally in response to a successful `dispatch()` of a transaction, we reset the input fields on the New Post form and re-enable the input elements.  Otherwise, in the case of an error we make the input fields editable again but leave the contents in them to allow them to try again if they so choose.
 
+| Previous | Next |
+| -- | -- |
+| [02 Integrating Arweave-js](02-IntegratingArweaveJS.md#integrating-arweave-js)| [04 Polishing and Deploying](04-PolishingAndDeploying.md#polishing-and-deploying)
+
 

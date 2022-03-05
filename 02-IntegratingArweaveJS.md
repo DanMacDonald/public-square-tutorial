@@ -389,3 +389,7 @@ By returning a function from `useEffect()` we are giving React a way to cancel o
 That’s it! You’re through the most complex code you’ll see in this guide. You now understand how the transaction data containing the post message is making it into the Post components.
 
 Now onto some exciting functionality.
+
+| Previous | Next |
+| -- | -- |
+| [01 Querying Arweave](01-QueryingArweave.md#querying-arweave) | [03 Posting Transactions](03-PostingTransactions.md#posting-transactions)

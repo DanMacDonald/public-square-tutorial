@@ -154,3 +154,7 @@ To keep our tutorial simple we’re only going to deal with posts that have a `"
 We’ve also added a bit more data to our results data structure. We’ll see what that data is needed for shortly.
 
 Good! Now we have a javascript function that initializes a query for us, but how do we post it to the gateway to get results?
+
+| Previous | Next |
+| -- | -- |
+| [Overivew](README.md)| [02 Integrating Arweave-js](02-IntegratingArweaveJS.md#integrating-arweave-js)
