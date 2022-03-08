@@ -27,7 +27,7 @@ Add the following line to the start of the `App()` function.
 const [isWalletConnected, setIsWalletConnected] = React.useState(false);
 ```
 
-This should appear right above the two other `useSate()` lines we added for `postInfos` and `isSearching`. Now scroll down to the where the `<Navigation />` component appears in the file and add in the following line.
+This should appear right above the two other `useSate()` lines we added for `postInfos` and `isSearching`. Now scroll down to where the `<Navigation />` component appears in the file and add in the following line.
 ```js
 <WalletSelectButton onWalletConnect={() => setIsWalletConnected(true)}/>
 ```
