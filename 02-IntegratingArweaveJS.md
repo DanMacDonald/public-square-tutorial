@@ -89,7 +89,7 @@ While this looks like your basic input validation, there’s actually a fair amo
 
 Ok, now that we know how this function is mapping GraphQL data to our postInfo items, let's wire it up in our `getPostsInfos()` function back in `src/App.js`.
 
-First update our import statement  to include `createPostInfo`.
+First, update our import statement  to include `createPostInfo`.
 ```js
 import { buildQuery, arweave, createPostInfo } from './lib/api';
 ```
