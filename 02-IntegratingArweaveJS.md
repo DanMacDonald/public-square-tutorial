@@ -171,7 +171,7 @@ This is nice, but it seems like something is missing. Ah yes, the actual content
 This leads us to our next Arweave concept.
 
 # Retrieving transaction data
-Head back to our `createPostData` function in `src/lib/api.js` again. Edit the last few lines of the function to be the following… 
+Head back to our `createPostInfo()` function in `src/lib/api.js` again. Edit the last few lines of the function to be the following… 
 
 (adding a request property to the post info declaration, and then assigning an arweave request to it before returning the object)
 ```js
