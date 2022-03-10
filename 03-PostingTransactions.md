@@ -42,7 +42,7 @@ And when you click on it you should be prompted to sign in with either ArConnect
 
 Open up the `src/components/WalletSelectButton.jsx` and locate the `connectWallet()` function. Inside you’ll see a switch statement with a case for `AR_CONNECT`. Add the following line to initialize ArConnect.
 ```js
-await window.arweaveWallet.connect(['ACCESS_ADDRESS','SIGN_TRANSACTION']);
+await window.arweaveWallet.connect(['ACCESS_ADDRESS','SIGN_TRANSACTION','DISPATCH']);
 ```
 
 When ArConnect is active in your browser, it exposes itself on the `window.arweaveWallet` object. When connecting to ArConnect we can request the permissions we would like our users to have while using the dApp. In our case we’d like access to the users wallet address and the ability to sign transactions. There are a number of other [wallet permissions](https://docs.th8ta.org/arconnect/permissions) we can ask for, but we only need these two for our dApp.
@@ -99,7 +99,7 @@ The final `connectWallet()` function will look like this…
 async function connectWallet(walletName) {
  switch(walletName) {
    case AR_CONNECT:
-     await window.arweaveWallet.connect(['ACCESS_ADDRESS','SIGN_TRANSACTION']);
+     await window.arweaveWallet.connect(['ACCESS_ADDRESS','SIGN_TRANSACTION','DISPATCH']);
      break;
    case ARWEAVE_APP:
      await webWallet.connect();
