@@ -15,7 +15,7 @@ This will create an instance of the arweave api object with default configuratio
 ## Querying the gateway
 Now let’s head over to `src/App.js`.
 
-First thing is to import our arweave instance and buildQuery() function with the following import.
+First thing is to import our arweave instance and `buildQuery()` function with the following import.
 ```js
 import { buildQuery, arweave } from './lib/api';
 ```
@@ -56,7 +56,8 @@ If you expand the first element fully you’ll see the data structure we request
 
 An important note…
 >We’re getting 100 results from our GraphQL query  because we specified `first: 100` in the filter criteria. If you omit this criteria, the **gateway defaults to returning 10 results**.
-100 results also happens to be the maximum number of results the gateway will return per query request. You can read more about results [pagination and cursors](https://gql-guide.vercel.app/#pagination) here.
+>
+>100 results also happens to be the maximum number of results the gateway will return per query request. You can read more about results [pagination and cursors](https://gql-guide.vercel.app/#pagination) here.
 
 Okay! Let’s start binding these to our view components. The sample project components expect each post's data to be organized in a specific way, but instead of having you guess what that might be, the sample project includes a function that converts the `node` objects we got back from our GraphQL query into `postData` objects.
 
@@ -218,9 +219,9 @@ When a component has a collection of child components like we do here, React pre
 It’s time to take a look at the `<PostItem />` view component.
 ```js
 const PostItem = (props) => {
- const [postMessage, setPostMessage] =
-   React.useState('s'.repeat(Math.max(props.item.length - 75, 0)));
- const [statusMessage, setStatusMessage] = React.useState("");
+  const [postMessage, setPostMessage] =
+    React.useState('s'.repeat(Math.max(props.item.length - 75, 0)));
+  const [statusMessage, setStatusMessage] = React.useState("");
 ```
 
 Okay, already there are some interesting things going on here. 

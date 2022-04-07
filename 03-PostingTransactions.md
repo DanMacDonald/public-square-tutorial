@@ -10,15 +10,15 @@ So the next thing to dive into would be making new posts, but in order to do tha
 >An RSA signature is a 512byte key, but when we  take the SHA-256 hash of that, we get the transaction id. This means it’s not possible to know a transaction's id until it’s been signed.
 
 
-In this section we’ll learn about two arweave wallets. (ArConnect)[https://arconnect.io] and (arweave.app)[https://arweave.app]. These two wallets share the same purpose of preventing our application from ever seeing the user's private key, all while enabling the user to perform functions like sign, verify, decrypt and encrypt information within our app.
+In this section we’ll learn about two arweave wallets. [ArConnect](https://arconnect.io) and [arweave.app](https://arweave.app). These two wallets share the same purpose of preventing our application from ever seeing the user's private key, all while enabling the user to perform functions like sign, verify, decrypt and encrypt information within our app.
 
 What’s interesting is that ArConnect and arweave.app use differing approaches to accomplish this shared purpose. ArConnect operates similarly to MetaMask (if you’re familiar with it) and is a browser extension you [download from the chrome store](https://chrome.google.com/webstore/detail/arconnect/einnioafmpimabjcddiinlhmijaionap). Once installed this extension will inject some code into each page you visit to enable it to talk to the plugin.
 
-Arweave.app is a web wallet, which means it’s just some code running in another tab in your browser. Because it’s not a plugin, it doesn’t have permissions to inject code into our app so if we are to support it, we have to add the supporting code ourselves.
+Arweave.app is a web wallet, which means it’s just some code running in another tab in your browser. Because it’s not a plugin, it doesn’t have permissions to inject code into the app so if we are to support it, we have to add the supporting code ourselves.
 
 A little more work for us, but less work for the user — who doesn’t have to first install a plugin to sign into the app.
 
-Let’s start off with the ArConnect wallet integration. After you’ve installed the browser plugin there’s not much to do on our side. In order to save you having to build a bunch of components to support the wallet flow, the sample project implements one for you.
+Let’s start off with the ArConnect wallet integration. After you’ve installed the browser plugin there’s not much to do on the app side. In order to save you having to build a bunch of components to support the wallet flow, the project template implements one for you.
 
 Head over to the `src/App.js` file and let's add some state. Any number of components could want to know if the user is signed in or not so it makes sense to store a flag at the `<App />` component level to indicate if the user has connected a wallet or not.
 
@@ -129,7 +129,7 @@ Conveniently both wallets listen to events on the global `window.arweaveWallet` 
 * For arweave.app the [supported wallet actions](https://github.com/jfbeats/ArweaveWalletConnector/blob/master/src/ArweaveWebWallet.ts#L45-L59) can be found on github.
 * The same is true for ArConnects’ [arweaveWalelt api](https://github.com/th8ta/ArConnect/blob/development/types/index.d.ts#L9-L138).
 
-For the most part the two wallets support identical interfaces via `window.arweaveWallet`, enabling you to write your code once and have it work seamlessly with either wallet. The one exception is around the encrypt() and decrypt() functions, but I expect this divergence will be reconciled in the future.
+For the most part the two wallets support identical interfaces via `window.arweaveWallet`, enabling you to write your code once and have it work seamlessly with either wallet. The one exception is around the `encrypt()` and `decrypt()` functions, but I expect this divergence will be reconciled in the future.
 
 Oh, importantly, the `arweave-js` package knows how to integrate with the `window.arweaveWallet ` reference to implement its api.
 
