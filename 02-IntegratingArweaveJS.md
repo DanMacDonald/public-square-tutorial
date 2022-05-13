@@ -172,15 +172,18 @@ This is nice, but it seems like something is missing. Ah yes, the actual content
 This leads us to our next Arweave concept.
 
 # Retrieving transaction data
-Head back to our `createPostInfo()` function in `src/lib/api.js` again. Edit the last few lines of the function to be the following… 
+Head back to our `createPostInfo()` function in `src/lib/api.js` again. Edit the last few lines of the `createPostInfo()` function to be the following… 
 
 (adding a request property to the post info declaration, and then assigning an arweave request to it before returning the object)
 ```js
    request: null,
  }
- postInfo.request = arweave.api.get(`/${node.id}`, { timeout: 10000 })
-   .catch(() => { postInfo.error = "timeout loading data"});
- return postInfo;
+ if (postInfo.length <= maxMessageLength) {
+    postInfo.request = arweave.api.get(`/${node.id}`, { timeout: 10000 })
+      .catch(() => { postInfo.error = 'timeout loading data' });
+  } else {
+    postInfo.error = `message is too large (exceeds ${maxMessageLength/1024}kb)`;
+  }
 }
 ```
 
@@ -191,6 +194,8 @@ You’ll notice that we also `catch()` any error in our request and store it on 
 >It should be noted that the React way of doing this would be to have another `useEffect()` in each `<Post />` view component to retrieve the transaction data for that view. However, `useEffect()` only executes after the component is mounted (visible) on the page. This would lead to a situation where the post would first be visible on the page, then the `useEffect()` would fire to start loading the transaction data for the post.
 >
 > Instead of taking that approach we’re relying on the fact that these postInfo’s are stored at the application level and persist until updated. This means we can kick off loading the transaction data right away before mounting or displaying any `<Post />` components. This will make some performance optimizations possible later on that will make the user experience feel smooth and polished. I have an axiom. If you have to choose between the “right way” and the better user experience, always choose the better user experience.
+
+We also do a check to make sure we aren't trying to load and display massive posts that will cause the browser to grind to a halt when trying to render the timeline. The value of `maxMessageLength` can be configured at the top of the `src/lib/api.js` file.
 
 Okay, with that out of the way let’s see what’s showing up in our dApp.
 
@@ -218,25 +223,23 @@ When a component has a collection of child components like we do here, React pre
 ## Optimizing view components
 It’s time to take a look at the `<PostItem />` view component.
 ```js
-const PostItem = (props) => {
-  const [postMessage, setPostMessage] =
-    React.useState('s'.repeat(Math.max(props.item.length - 75, 0)));
-  const [statusMessage, setStatusMessage] = React.useState("");
+const getPostMessage = async () => {
+    setPostMessage('s'.repeat(Math.min(Math.max(props.postInfo.length - 75, 0), maxMessageLength)));
 ```
 
 Okay, already there are some interesting things going on here. 
 
-First off we have two React states, `postMessage` and `statusMessage`. Nothing unexpected there, but what's this weird initialization of `postMessage` to have a bunch of ‘s’ characters? 
+The first step of our nested `getPostMessage()` function is initialization of `postMessage` to have a bunch of ‘s’ characters. What's going on here?
 
 Let’s take a look.
 
-To understand what's going on, let’s initialize the postMessage with an empty string.
+To understand what's going on, let’s comment out the optimization
 ```js
-  const [postMessage, setPostMessage] = React.useState("");
+  //setPostMessage('s'.repeat(Math.min(Math.max(props.postInfo.length - 75, 0), maxMessageLength)));
 ```
 
 Now watch carefully as our app loads up after hitting the refresh button in the browser. 
->You may need to refresh a few times to observe the effect. 
+>You may need to refresh a few times to observe the effect. You may also want to turn on network throttling. I was able to observe the effect by setting throttling to "Fast 3G" on the Netework tab in the brave browsers' developer tools.
 >
 >If you’re not seeing the visual popping, try doing a “hard refresh” in your browser. 
 >
@@ -247,12 +250,11 @@ Now watch carefully as our app loads up after hitting the refresh button in the 
 |--------|------|
 |![PostInfo Results](images/image08.png)|![PostInfo Results](images/image09.png)|
 
-Notice how the post with two lines of text pushed all the other posts down a little after its post message loaded?? The more multiline posts visible, the more the posts will appear to jump around as the page loads. (you can observe the effect the most clearly by comparing where the avatar image is before and after loading, anything below the two line post gets pushed down in the view)
+Notice how the post with two lines of text pushed all the other posts down a little after its post message loaded?? The more multiline posts visible, the more the posts below them will appear to jump around as the page loads. (you can observe the effect the most clearly by comparing where the avatar image is before and after loading, anything below the two line post gets pushed down in the view)
 
 Now let’s restore the optimization.
 ```js
-  const [postMessage, setPostMessage] =
-   React.useState('s'.repeat(Math.max(props.item.length - 75, 0)));
+setPostMessage('s'.repeat(Math.min(Math.max(props.postInfo.length - 75, 0), maxMessageLength)));
 ```
 
 And see the difference…
@@ -261,9 +263,9 @@ And see the difference…
 |--------|------|
 |![PostInfo Results](images/image10.png)|![PostInfo Results](images/image09.png)|
 
-The thing to note here is that the problematic two lines post now has two lines of text while loading. The repeated ssssss characters and the "loading…" status message. The additional line provided by the ssssss characters enables the post to have the same vertical extent before and after the message is loaded.  This dramatically reduces the visual popping that occurs without the optimization.
+The thing to note here is that the problematic two lines post now has two lines of text while loading. The repeated ssssss characters and the "loading…" status message. The additional line provided by the ssssss characters enables the post to have the same vertical extent before and after the message is loaded.  This dramatically reduces the visual popping (moving around of subsequent posts) that occurs without the optimization.
 
-Our optimization assumes that the line length of a post is approximately 75 characters, so the number of ‘s’ we add is roughly equivalent to the number of characters on the 2nd line of our two line post. There are a number of other approaches that may be more correct than printing padding ‘s’ repeatedly. In practice, though, I found the loading state was only visible for a frame or two before being replaced by actual data. Having the vertical extent of the post be correct during loading had a far greater effect on the perception of pop in.
+Our optimization assumes that the line length of a post is approximately 75 characters, so the number of ‘s’ we add is roughly equivalent to the number of characters on the 2nd line of our two line post message. There are a number of other approaches that may be more correct than printing padding ‘s’ repeatedly. In practice, though, I found the loading state was only visible for a frame or two before being replaced by actual data. Having the vertical extent of the post be correct during loading had a far greater effect on the perception of pop in.
 
 The cool thing about this optimization is that it was enabled by the fact that we know the number of characters in a post’s message data before we retrieve it from arweave! All thanks to the `node.data.size` we queried via GraphQL back in Querying from Javascript.
 
@@ -292,6 +294,7 @@ First off we have some local variables to track changes to the status and post m
 React.useEffect(() => {
   let newPostMessage = "";
   let newStatus = "";
+  ...
 ```
 
 Why not just use the `postMessage` and `statusMessage` variables we defined for our React state?
@@ -304,31 +307,44 @@ So, we only want to update our React state if the `<PostItem />` component is st
 
 Next, we’ll want to do work only when the `item.message` property is undefined. This is true the first time `useEffect()` executes as the `<Post />` component is mounted.
 ```js
-if (!props.item.message) {
- setStatusMessage("loading...");
- let isCancelled = false;
- 
- const getMessage = async () => {
-   const response = await props.item.request;
-   if (!response) {
-     newStatus = props.item.error;
-   } else if (response.status && (response.status === 200 
-     || response.status == 202)) {
-     props.item.message = response.data;
-     newStatus = "";
-     newPostMessage = response.data;
-   } else {
-     newStatus = "missing data";
-   }
- 
-   if (isCancelled)
-     return;
-   setStatusMessage(newStatus);
-   setPostMessage(newPostMessage);
- }
- 
- getMessage();
- return () => isCancelled = true;
+if (!props.postInfo.message) {
+  setStatusMessage("loading...");
+  let isCancelled = false;
+
+  const getPostMessage = async () => {
+    setPostMessage('s'.repeat(Math.min(Math.max(props.postInfo.length - 75, 0), maxMessageLength)));
+    const response = await props.postInfo.request;
+    switch (response?.status) {
+      case 200:
+      case 202:
+        props.postInfo.message = response.data.toString();
+        newStatus = "";
+        newPostMessage = props.postInfo.message;
+        break;
+      case 404:
+        newStatus = "Not Found";
+        break;
+      default:
+        newStatus = props.postInfo?.error;
+        if(!newStatus) {
+          newStatus = "missing data";
+        }
+    }
+
+    if (isCancelled)
+      return;
+
+    setPostMessage(newPostMessage);
+    setStatusMessage(newStatus);
+  }
+
+  if (props.postInfo.error) {
+    setPostMessage("");
+    setStatusMessage(props.postInfo.error);
+  } else {
+    getPostMessage();
+  }
+  return () => isCancelled = true;
 }
 ```
 
@@ -339,28 +355,31 @@ Next we need to expose a means for React to cancel our `useEffect()` call if the
 let isCancelled = false;
 ``` 
 
-Next we declare an `async` `getMessage()` function. React’s `useEffect()` functions are not `async` themselves but declaring an inner `asyn`c function this way lets us write code that utilizes async calling semantics. This enables us to use `await` which improves readability by reducing the telescoping effect of using promise-style  `.then()`‘s repeatedly.
+Now we declare an `async getMessage()` function. React’s `useEffect()` functions are not `async` themselves but declaring an inner `asyn`c function this way lets us write code that utilizes async calling semantics. This is a fancy way of saying we can use the `await` keyword which improves readability by eliminating the deeply nested code promise-style  `.then()`‘s result in.
 
 The first thing we do in `getMessage()` is to 
 ```js
-const response = await props.postInfo.request`
+const response = await props.postInfo.request;
 ```
 This` props.item.request` may or may not have been completed before `useEffect()` is executed, but in either case we won’t move to the next line until we have a completed request.
 
-When we created this item.request back in the [Retrieving transaction data](#retrieving-transaction-data) step, we also added a `.catch()` to handle any errors. If an error happened during the request, the value of response would end up being `undefined` and the error text would be stored in `item.error`.
+When we created this `item.request` back in the [Retrieving transaction data](#retrieving-transaction-data) step, we also added a `.catch()` to handle any errors. If an error happened during the request, the value of response would end up being `undefined` and the error text would be stored in `item.error`.
 
-So an error is the first thing we check for with `if (!response) {` and we store the error message in our local `newStatus` variable.
+We use a `switch` statement to handle the various [HTTP Status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) that might be returned. If the `response` object is `undefined` like it will be if a timeout or other error occcured then the `switch` will fall though to the `default:` case.  Here we attempt to display any error message stored in our `postInfo` and fall back to using `"missing data"` if no error is provided.
 
-Next  is our valid case. We have a response and it has a status of 200 (the [HTTP Status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) for success) or in the case of a pending data a status of 202.
-
-In this case we add a new property with  
+In the case where we have a valid `response` and a status code `200` or `202` (our success codes) we update our `postInfo.message` property...
 ```js
-props.postInfo.message = response.data;
+props.postInfo.message = response.data.toString();
 ``` 
-and we stuff the response data (post message) into it. If the `useEffect()` executes again and we already have the message we won’t have to do all this work again, Once we have the post message in hand, we no longer want to display the “loading…” status text in the `<PostItem /> `so we set our newStatus to an empty string.
+..and we stuff the response data (post message) into it. If the `useEffect()` executes again and we already have the `postInfo.message` initalized and we won’t have to do all this work again, Once we have the post message in hand, we no longer want to display the `“loading…”` status text in the `<PostItem /> `so we set our newStatus to an empty string.
 
-We also update our `newPostMessage` local variable with the post message.
-In the final else case, we set `newStatus = "missing data";` , in this case our request completed without error but the gateway returned something other than a 200 (success) status code. In almost all cases what is actually returned is a status code of 404 (the [HTTP Status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) for missing) meaning it couldn’t locate the data.
+We also update our `newPostMessage` local variable with the post message, and clear out the `newStatus`. This makes sure our react state get's updated to match the `message` change in `postInfo`.
+```js
+newStatus = "";
+newPostMessage = props.postInfo.message;
+```
+
+In the case of a 404 status code, we set `newStatus = "missing data"`. In this case our `request` completed without error but the gateway returned something other than a 200 (success) or 202 (accepted/pending) status code. In almost all cases what is actually returned is a status code of 404 (the [HTTP Status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) for missing) meaning it couldn’t locate the data.
 
 How can data be missing on Arweave? Isn’t data on arweave permanent?
 
