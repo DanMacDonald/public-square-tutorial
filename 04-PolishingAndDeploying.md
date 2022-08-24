@@ -230,7 +230,7 @@ export const buildQuery = ({count, address, topic} = {}) => {
 
 These arguments allow us to filter the query results in three important ways.
 
-* We can specify a count argument that will limit the results to a specific number. By default it will default to 100 (the maximum the arweave.net/graphql endpoint will return) if no count is provided. You can see more documentation on how the first parameter works as well as [pagination and cursors](https://gql-guide.vercel.app/#pagination) in the graphQL guide.
+* We can specify a count argument that will limit the results to a specific number. By default it will be set to 100 (the maximum the arweave.net/graphql endpoint will return) if no count is provided. You can see more documentation on how the first parameter works as well as [pagination and cursors](https://gql-guide.vercel.app/#pagination) in the graphQL guide.
 
 * Specifying an address argument will filter the results limiting them to only those transactions owned by a particular address. You can read more about [owners address filtering](https://gql-guide.vercel.app/#owners) here.
 
@@ -245,8 +245,6 @@ async function getPostInfos(ownerAddress, topic) {
 Poof! Now when we go back to the browser and click on users wallet addresses or topic links it takes us to a page with filtered results. How? Well we cheated a bit, the `<TopicResults />` and `<UserResults />` components in the sample project have been passing ownerAddress and topic filters as arguments  to `getPostInfos()` the whole time. Until we added these parameters javascript was just ignoring them. 
 
 The React implementation is all there in `src/App.js` for you to inspect if you’re curious.
-# Integrating Avatars
-`<Coming soon>`
 
 # Deploying to Arweave
 Finally, we’ve got a working application but it’s just on our machine, we want to deploy it permanently on arweave making it fully decentralized. 
