@@ -112,12 +112,16 @@ export const buildQuery = () => {
    transactions(first: 100,
      tags: [
        {
-         name: "App-Name",
-         values: ["PublicSquare"]
+          name: "App-Name",
+          values: ["PublicSquare"]
        },
        {
-         name: "Content-Type",
-         values: ["text/plain"]
+          name: "Content-Type",
+          values: ["text/plain"]
+       },
+       {
+          name: "Version",
+          values: ["1.0.1"]
        }
      ]
    ) {
@@ -146,9 +150,11 @@ export const buildQuery = () => {
 }
 ```
 
-If you’re paying attention you’ll notice that we’ve added a new filter criteria to the `tags` section. We’re now additionally looking for a  `"Content-Type"` tag with the value `"text/plain"` on the `transactions` returned by our query.
+If you’re paying attention you’ll notice that we’ve added a new filter criteria to the `tags` section. We’re now additionally looking for a  `"Content-Type"` tag with the value `"text/plain"` and a `"Version"` tag with the value `"1.0.1"` on the `transactions` returned by our query.
 
-Why add this additional filter criteria? Well, it turns out we aren’t the only ones piggybacking on this Public Square protocol. Other developers have as well and they’ve taken it in different directions. One of the most common ways developers extend the protocol is by turning the post format into JSON (instead of plain text) and embedding more structured data into the posts transaction data.  When they do that they change the `"Content-type"` tag to `"text/javascript"`. 
+Why add this additional filter criteria? Well, it turns out we aren’t the only ones piggybacking on this Public Square protocol. Other developers have as well and they’ve taken it in different directions. One of the most common ways developers extend the protocol is by turning the post format into JSON (instead of plain text) and embedding more structured data into the posts transaction data.  When they do that they change the `"Content-type"` tag to `"text/javascript"`.
+
+It also helps with graphQL query performance to be as specific as possible with tag filters.
 
 To keep our tutorial simple we’re only going to deal with posts that have a `"Content-type"`  of `"text/plain"`. What other content types are there? By convention the `"Content-type"` tag follows the MIME types standard. You can find a list of [Common MIME types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types) here.
 

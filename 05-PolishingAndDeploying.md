@@ -222,6 +222,10 @@ export const buildQuery = ({count, address, topic} = {}) => {
           name: "Content-Type",
           values: ["text/plain"]
         },
+        {
+          name: "Version",
+          values: ["1.0.1"]
+        },
         ${topicFilter}
       ]
     )
@@ -291,7 +295,13 @@ Thats it. You're done. You now have your own decentralized, permanently deployed
 
 The version I deployed creating this tutorial is deployed here...
 
-https://arweave.net/2SFFgIDj9lc1GSwnrR-nhMaYGCPpz6q9KqFpO5g6C3I/
+https://arweave.net/HWxmM0XwdKAlXNfGCcJIQ5is3mbmIq0thLlB3Jc00H8
+
+...or if you prefer the much easier to remember...
+
+https://public-square.arweave.dev 
+
+Deployed using ArNS which you can learn more about here https://pages.arweave.dev.
 
 Welcome to the permaweb🐘
  
@@ -299,5 +309,5 @@ Welcome to the permaweb🐘
 
  | Previous | Overview |
 | -- | -- |
-| [03 Posting Transactions](03-PostingTransactions.md#posting-transactions) | [README.md](README.md#topics)
+| [04 Integrating arweave-account](04-IntegratingAccount.md#integrating-arweave-account) | [README.md](README.md#topics)
 

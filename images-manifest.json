@@ -1,0 +1,84 @@
+{
+    "manifest": "arweave/paths",
+    "version": "0.1.0",
+    "paths": {
+        ".DS_Store": {
+            "id": "aeDIOfno_DeTP9X0fyKgT6lEo1FwiRzlVIbiC6BwBds"
+        },
+        "image14.png": {
+            "id": "8rHbtX0XkZ1O9vMccAf-azJ_T5l4u_ETMJWjN9_wwcw"
+        },
+        "image01.png": {
+            "id": "rYfVvFVKLFmmtXmf8KeTvsG8avUXMQ4qOBBTZRHqVU0"
+        },
+        "image15.png": {
+            "id": "fyaLGoFn6J1rkYN5SjRT5_YXRoVzu8kP-4dQ09ynUdA"
+        },
+        "image03.png": {
+            "id": "r7a-0Qmc8dtnb6fApeaYNsmB_CAw0plhqvP8koXqj2k"
+        },
+        "image17.png": {
+            "id": "gnDJregezUHmAgdEUTfXJ89_Y7G0X5MKEcmgYSvwl6w"
+        },
+        "image16.png": {
+            "id": "EfkqUpINVGn7qXGx-W3J6TGRlDUiAPtuVQiCE5ZDres"
+        },
+        "image02.png": {
+            "id": "xxCsOsZenu7-q4zDs2fNxDCGZWokUAVCKE2Du1qxefM"
+        },
+        "image06.png": {
+            "id": "dcWmyuMZ9CyKJbkwxizuEpZSD3WE6LeWXN11v-zUW_U"
+        },
+        "image12.png": {
+            "id": "beGLPfUEKxFA6kr6LBtiajD9vzo5X2aKZ58RVMrgNI0"
+        },
+        "image13.png": {
+            "id": "NN00A95ozI8a4wo-ZG--Ec4SETP0IGv1_L5FFHg53Ps"
+        },
+        "image07.png": {
+            "id": "oq8jWC-SI3fOx0xAQ7EEobhXLFYoUOr2tTgLLMDrh2k"
+        },
+        "image11.png": {
+            "id": "B_gNay44HbIlqqFxhQa410sSLHeDGp76u3lbFnrAbGQ"
+        },
+        "image05.png": {
+            "id": "bYyO373ltax4RE-7s0u85zlLCmo_gMkA9M6P6org_k8"
+        },
+        "image04.png": {
+            "id": "8rGgBNkzQL6w4Vrr3GJOZC2t9ay_MHW9CBkWF1rOxJM"
+        },
+        "image10.png": {
+            "id": "iVP9CRCc6KikkLwcmcwpUU3uaSTc4YZ81ckyrJYvJJc"
+        },
+        "image21.png": {
+            "id": "4MtG8Vx9rlTjQcfgbx-FvsyxeNrWas14aprJfQHvkog"
+        },
+        "image09.png": {
+            "id": "Dw46KZEBdftRPxGz30o7z8C85ybW1yOu00U_j_3xZFo"
+        },
+        "image08.png": {
+            "id": "vAT2aXiu0Ubm1L_HwMHtKGCicFftrqCBKRQK6sUnUE0"
+        },
+        "image20.png": {
+            "id": "ir5m6wbr2522sShVeh8AN1Yo_3sUQJ2xFramvjciw0o"
+        },
+        "image22.png": {
+            "id": "ChFlOEPK4sbM9YCu3ELg5RsdLlMkKWgJTcIyaTTwQAs"
+        },
+        "image23.png": {
+            "id": "bMLsFZdtNBftpvQxH-c-zGZmDojVamUc3j3RX8MqUB4"
+        },
+        "image18.png": {
+            "id": "SLLAzvUhbSgTcw5qZtDiki9JHu4enOILYNdKH8O3RTA"
+        },
+        "image24.png": {
+            "id": "07dDCTWs627Wx9hW2mYwy3HCAnljD-B1DjxNew0I1Y8"
+        },
+        "image25.png": {
+            "id": "aZn-4TmG4lASIJ1G1Wqq_Cr8lxAqelfxJEdn2TSOuL4"
+        },
+        "image19.png": {
+            "id": "bD92PpPuOdUNtP9zPnU6ybpE8YG_oyq2eMIT921YZtM"
+        }
+    }
+}
