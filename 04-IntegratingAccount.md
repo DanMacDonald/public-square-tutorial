@@ -24,7 +24,7 @@ Then right below the Arweave initialization, add the initialization for `arweave
 export const account = new Account({
     cacheIsActivated: true,
     cacheSize: 100,
-	cacheTime: 3600000  // 3600000ms => 1 hour cache duration
+    cacheTime: 3600000  // 3600000ms => 1 hour cache duration
   });
 ```
 We're telling `arweave-account` that we want to use caching, which will store account profiles we've loaded (in localstorage) for 1 hour. This limits the amount of redundant graphQL queries we do for account info lookups. If we run too many graphQL queries we'll run the risk of getting rate limited by the gateway and seeing a HTTP Status code of 429.
