@@ -197,7 +197,7 @@ You can dig into the implementation if you’re inclined, but all you really nee
 * We can set a flag, `isPosting`, to enable or disable input on the interactive elements.. Disabling input on post provides visual feedback to the user that the post has been submitted. It also prevents them from hitting the “Post” button multiple times, potentially posting duplicate posts unintentionally.
 
 ## Dispatching a Transaction
-At long last,  it’s time to implement the `onPostButtonClicked()` function and send a transaction to arweave.
+At long last,  it’s time to implement the `onPostButtonClicked()` function and send a transaction to arweave. We do that by adding the code below, don't worry about the commented out line, we'll come back to it later in the tutorial.
 ```js
 async function onPostButtonClicked() {
    setIsPosting(true);
@@ -209,7 +209,7 @@ async function onPostButtonClicked() {
    try {
      let result = await window.arweaveWallet.dispatch(tx);
      setPostValue("");
-     setTopicValue("");
+     // setTopicValue("");
      if (props.onPostMessage) {
        props.onPostMessage(result.id);
      }
