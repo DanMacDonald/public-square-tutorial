@@ -126,7 +126,7 @@ So what can we do with these wallets now that it’s possible to sign in?
 
 Conveniently both wallets listen to events on the global `window.arweaveWallet` instance.
 
-* For arweave.app the [supported wallet actions](https://github.com/jfbeats/ArweaveWalletConnector/blob/master/src/ArweaveWebWallet.ts#L45-L59) can be found on github.
+* For arweave.app the [supported wallet actions](https://github.com/jfbeats/ArweaveWebWallet/blob/master/src/providers/Arweave.ts#L84-L153) can be found on github.
 * The same is true for ArConnects’ [arweaveWalelt api](https://github.com/th8ta/ArConnect/blob/development/types/index.d.ts#L9-L138).
 
 For the most part the two wallets support identical interfaces via `window.arweaveWallet`, enabling you to write your code once and have it work seamlessly with either wallet. The one exception is around the `encrypt()` and `decrypt()` functions, but I expect this divergence will be reconciled in the future.
