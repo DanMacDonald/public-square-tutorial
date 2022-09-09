@@ -168,6 +168,7 @@ Next uncomment the “topic” divs that are the first child of `<div className=
  />
 </div>
 ```
+Also uncomment the `// setTopicValue("");` line in `onPostButtonClicked()`, this will reset the topic field to its default state after we make a post.
 
 Now when you sign into the dApp with your wallet you’ll see a place to enter a topic in the NewPost view.
 
