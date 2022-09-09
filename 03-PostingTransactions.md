@@ -29,7 +29,7 @@ const [isWalletConnected, setIsWalletConnected] = React.useState(false);
 
 This should appear right above the two other `useSate()` lines we added for `postInfos` and `isSearching`. Now scroll down to where the `<Navigation />` component appears in the file and add in the following line.
 ```js
-<WalletSelectButton onWalletConnect={() => setIsWalletConnected(true)}/>
+<WalletSelectButton setIsConnected={() => setIsWalletConnected(true)}/>
 ```
 
 You should now see a big “Select Wallet” button appearing below the left navigation in the app.
