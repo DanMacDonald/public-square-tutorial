@@ -117,7 +117,6 @@ const postInfo = {
     txid: node.id,
     owner: ownerAddress,
     account: account.get(ownerAddress),
-    topic: topic,
     height: height,
     length: node.data.size,
     timestamp: timestamp,
